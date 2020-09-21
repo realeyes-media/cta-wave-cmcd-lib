@@ -4,6 +4,7 @@
     "description": "CMCD Scripts",
     "scripts": {
         "build:cmcd": "cd cmcd && ./gradlew build",
+        "cz": "cz --retry",
         "link:js": "cd cmcd/build/js/packages/cmcd && npm link",
         "link:hlsjs": "cd examples/hlsjs && npm link cmcd",
         "link": "npm run build:cmcd && npm run link:js && npm run link:hlsjs"
@@ -22,5 +23,20 @@
     "bugs": {
         "url": "https://github.com/realeyes-media/cmcd/issues"
     },
-    "private": true
+    "private": true,
+    "devDependencies": {
+        "commitizen": "4.2.1",
+        "cz-conventional-changelog": "3.3.0",
+        "husky": "4.3.0"
+    },
+    "husky": {
+        "hooks": {
+            "prepare-commit-msg": "exec < /dev/tty && npm run cz --hook || true"
+        }
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
 }
