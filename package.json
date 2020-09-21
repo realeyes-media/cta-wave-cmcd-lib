@@ -26,6 +26,7 @@
     "private": true,
     "devDependencies": {
         "commitizen": "4.2.1",
+        "conventional-changelog-cli": "2.1.0",
         "cz-conventional-changelog": "3.3.0",
         "husky": "4.3.0"
     },
