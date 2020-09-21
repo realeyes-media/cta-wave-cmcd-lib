@@ -1,0 +1,26 @@
+{
+    "name": "cmcd",
+    "version": "0.1.0",
+    "description": "CMCD Scripts",
+    "scripts": {
+        "build:cmcd": "cd cmcd && ./gradlew build",
+        "link:js": "cd cmcd/build/js/packages/cmcd && npm link",
+        "link:hlsjs": "cd examples/hlsjs && npm link cmcd",
+        "link": "npm run build:cmcd && npm run link:js && npm run link:hlsjs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/realeyes-media/cmcd.git"
+    },
+    "keywords": [
+        "cmcd",
+        "cta",
+        "wave"
+    ],
+    "author": "RealEyes Media, LLC <info@realeyes.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/realeyes-media/cmcd/issues"
+    },
+    "private": true
+}
