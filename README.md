@@ -12,3 +12,14 @@ CTA-5004
 ## Hls.js Example
 
 ## Exoplayer Example
+
+## Setup
+
+After cloning the repository:
+
+```bash
+npm install
+npm run link
+```
+
+This will install all dependencies and perform proper linking between the SDK and the Example Apps.
