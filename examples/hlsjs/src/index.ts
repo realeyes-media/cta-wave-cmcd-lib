@@ -1,3 +1,5 @@
-export const hello = "Hello, World!";
+import { CMCDManagerFactory } from "cmcd";
 
-console.log(hello);
+export const cmcdManager = CMCDManagerFactory.createCMCDManager();
+
+console.log(cmcdManager.hello);

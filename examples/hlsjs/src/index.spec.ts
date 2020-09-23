@@ -1,5 +1,5 @@
-import { hello } from ".";
+import { cmcdManager } from ".";
 
 test("hello, world", () => {
-    expect(hello).toBe("Hello, World!");
+    expect(cmcdManager.hello).toBe("hello!");
 });

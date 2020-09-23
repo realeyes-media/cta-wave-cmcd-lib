@@ -1,4 +1,4 @@
-package tech.ctawave.cmcd.exoplayer
+package tech.ctawave.exoplayercmcd
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton

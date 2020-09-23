@@ -1,3 +1,5 @@
+rootProject.name = "cmcd"
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -8,9 +10,8 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.namespace == "com.android" || requested.id.name == "kotlin-android-extensions") {
-                useModule("com.android.tools.build:gradle:3.5.2")
+                useModule("com.android.tools.build:gradle:4.0.1")
             }
         }
     }
 }
-rootProject.name = "cmcd"

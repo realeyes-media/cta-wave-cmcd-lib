@@ -1,5 +1,5 @@
 actual object CMCDManagerFactory {
-    actual fun  createCMCDManager(): CMCDManager = CMCDManagerJs
+    actual fun createCMCDManager(): CMCDManager = CMCDManagerJs
 }
 
 object CMCDManagerJs: CMCDManager {
