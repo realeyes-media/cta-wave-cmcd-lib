@@ -84,12 +84,12 @@ enum class CMCDStreamType {
 
 data class CMCDProperty<T>( val header: CMCDHeaderName, val description: String, var value: T) {}
 
-abstract class Version<C: Enum<C>>(map : Map<Enum<C>, CMCDProperty<*>>)
+abstract class Version<C:IVersionKeys>(map : Map<C, CMCDProperty<*>>)
 
-typealias Version1Structure = Map<Enum<VersionKeys.Version1Keys>, CMCDProperty<*>>
-typealias Version2Structure = Map<Enum<VersionKeys.Version2Keys>, CMCDProperty<*>>
+typealias Version1Structure = Map<IVersionKeys, CMCDProperty<*>>
+typealias Version2Structure = Map<IVersionKeys, CMCDProperty<*>>
 
-class Version1(map: Version1Structure): Version<VersionKeys.Version1Keys>(map) {
+class Version1(map: Version1Structure): Version<IVersionKeys>(map) {
     var br: CMCDProperty<Int>? = map.get(VersionKeys.Version1Keys.br) as? CMCDProperty<Int>
     var bl: CMCDProperty<Int>? = map.get(VersionKeys.Version1Keys.br) as? CMCDProperty<Int>
     var bs: CMCDProperty<Boolean>? = map.get(VersionKeys.Version1Keys.bs) as? CMCDProperty<Boolean>
@@ -109,7 +109,7 @@ class Version1(map: Version1Structure): Version<VersionKeys.Version1Keys>(map) {
     var v: CMCDProperty<Int>? = map.get(VersionKeys.Version1Keys.v) as? CMCDProperty<Int>
 }
 
-class Version2(map: Version2Structure): Version<VersionKeys.Version2Keys>(map) {
+class Version2(map: Version2Structure): Version<IVersionKeys>(map) {
 
 }
 
@@ -118,7 +118,22 @@ enum class VersionLibrary {
     VERSION_2,
     VERSION_3,
 }
-class CMCDManagerTest<C : Enum<C>> {
+interface IVersionKeys
+interface IVersion1Keys: IVersionKeys
+sealed class V1 {
+    enum class IntKeys: IVersion1Keys {
+        TEMP,
+        SOME
+    }
+
+    enum class StringKeys: IVersion1Keys {
+        WHATEVER
+    }
+}
+
+
+
+class CMCDManagerTest<C : IVersionKeys> {
 
     val version: Version<C>
 
@@ -126,30 +141,43 @@ class CMCDManagerTest<C : Enum<C>> {
         this.version = version
     }
 
-    fun setProperty(key: C, value: Any) {
+    fun setProperty(key: IntKeys, value: Int) {
+        this.version
+    }
+
+    fun setProperty(key: StringKeys, value: String) {
         this.version
     }
 }
 
 class CMCDManagerFactoryFake {
-    fun <C: Enum<C>> createCMCDManager(versionLibrary: VersionLibrary): CMCDManagerTest<C> {
+    fun <C: IVersionKeys>createCMCDManager(versionLibrary: VersionLibrary): CMCDManagerTest<C> {
         var versionObj: Version<*>
         when(versionLibrary){
-            VersionLibrary.VERSION_1 -> versionObj = Version1(emptyMap())
+            VersionLibrary.VERSION_1 -> versionObj = Version1(mapOf(
+                IntKeys.SOME to CMCDProperty<Int>(CMCDHeaderName.Object, "", 5),
+                IntKeys.TEMP to CMCDProperty<Int>(CMCDHeaderName.Object, "", 5),
+                StringKeys.WHATEVER to CMCDProperty<Int>(CMCDHeaderName.Object, "", 5),
+                StringKeys.WHATEVER to CMCDProperty<Int>(CMCDHeaderName.Object, "", 5),
+            ))
             VersionLibrary.VERSION_2 -> versionObj = Version2(emptyMap())
             else -> versionObj = Version1(emptyMap())
         }
 
-        return CMCDManagerTest<C>(versionObj)
+        return CMCDManagerTest<C>(versionObj as Version<C>)
     }
 }
 
 
 
 fun testing() {
+    var ben = Ben()
+    ben.
+//    var temp: Enum<VersionKeys.Version1Keys> = setOf(VersionKeys.Version1Keys.br, VersionKeys.Version1Keys.bl)
     val factoryFake = CMCDManagerFactoryFake()
-    val manager = factoryFake.createCMCDManager<VersionKeys.Version1Keys>(VersionLibrary.VERSION_1)
-    manager.setProperty(VersionKeys.Version1Keys.br, "")
+    val manager = factoryFake.createCMCDManager<IVersion1Keys>(VersionLibrary.VERSION_1)
+    manager.setProperty(IntKeys.SOME, 5)
+    manager.setProperty(StringKeys.WHATEVER, "")
 }
 
 
