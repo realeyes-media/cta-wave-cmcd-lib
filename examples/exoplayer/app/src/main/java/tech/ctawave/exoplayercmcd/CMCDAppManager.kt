@@ -1,7 +1,7 @@
 package tech.ctawave.exoplayercmcd
 
-class CMCDAppManager {
-
-    val cmcdManager = CMCDManagerFactory.createCMCDManager()
-
-}
+//class CMCDAppManager {
+//
+//    val cmcdManager = CMCDManagerFactory.createCMCDManager()
+//
+//}

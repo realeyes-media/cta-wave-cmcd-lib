@@ -1,15 +1,15 @@
-package tech.ctawave.exoplayercmcd.repository
+package tech.ctawave.exoplayercmcd.data.repository
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import tech.ctawave.exoplayercmcd.AppExecutors
-import tech.ctawave.exoplayercmcd.api.ApiEmptyResponse
-import tech.ctawave.exoplayercmcd.api.ApiErrorResponse
-import tech.ctawave.exoplayercmcd.api.ApiResponse
-import tech.ctawave.exoplayercmcd.api.ApiSuccessResponse
-import tech.ctawave.exoplayercmcd.vo.Resource
+import tech.ctawave.exoplayercmcd.util.AppExecutors
+import tech.ctawave.exoplayercmcd.data.remote.ApiEmptyResponse
+import tech.ctawave.exoplayercmcd.data.remote.ApiErrorResponse
+import tech.ctawave.exoplayercmcd.data.remote.ApiResponse
+import tech.ctawave.exoplayercmcd.data.remote.ApiSuccessResponse
+import tech.ctawave.exoplayercmcd.util.Resource
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -23,6 +23,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
 
     init {
         result.value = Resource.loading(null)
+        @Suppress("LeakingThis")
         val databaseSource = loadFromDatabase()
         result.addSource(databaseSource) { data ->
             result.removeSource(databaseSource)

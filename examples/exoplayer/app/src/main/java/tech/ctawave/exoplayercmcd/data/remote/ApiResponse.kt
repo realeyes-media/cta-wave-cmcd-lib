@@ -1,4 +1,4 @@
-package tech.ctawave.exoplayercmcd.api
+package tech.ctawave.exoplayercmcd.data.remote
 
 import retrofit2.Response
 

@@ -1,4 +1,4 @@
-package tech.ctawave.exoplayercmcd.vo
+package tech.ctawave.exoplayercmcd.util
 
 /**
  * Status of a resource that is provided to the UI.

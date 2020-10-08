@@ -1,4 +1,4 @@
-package tech.ctawave.exoplayercmcd
+package tech.ctawave.exoplayercmcd.util
 
 import android.os.Handler
 import android.os.Looper

@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/MediaListFragment"
-            android:name="tech.ctawave.exoplayercmcd.MediaListFragment"
+            android:name="tech.ctawave.exoplayercmcd.ui.medialist.MediaListFragment"
             android:label="@string/first_fragment_label"
             tools:layout="@layout/media_list_fragment">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
             android:id="@+id/SecondFragment"
-            android:name="tech.ctawave.exoplayercmcd.SecondFragment"
+            android:name="tech.ctawave.exoplayercmcd.ui.mediadetail.SecondFragment"
             android:label="@string/second_fragment_label"
             tools:layout="@layout/fragment_second">
 
