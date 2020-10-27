@@ -11,7 +11,7 @@ import tech.ctawave.exoplayercmcd.R
 class MediaListAdapter(private val listener: MediaListListener): RecyclerView.Adapter<MediaListAdapter.DataViewHolder>() {
 
     interface MediaListListener {
-        fun onMediaClick(id: String)
+        fun onMediaClick(uri: String)
     }
 
     class DataViewHolder(itemView: View, private val listener: MediaListListener): RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -22,7 +22,7 @@ class MediaListAdapter(private val listener: MediaListListener): RecyclerView.Ad
         }
 
         override fun onClick(v: View?) {
-            listener.onMediaClick(media.id)
+            listener.onMediaClick(media.uri)
         }
 
         fun bind(media: Media) {

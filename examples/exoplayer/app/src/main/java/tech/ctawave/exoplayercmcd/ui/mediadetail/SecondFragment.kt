@@ -1,18 +1,28 @@
 package tech.ctawave.exoplayercmcd.ui.mediadetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_second.*
+import kotlinx.android.synthetic.main.player_state_layout.*
 import tech.ctawave.exoplayercmcd.R
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
+@AndroidEntryPoint
 class SecondFragment : Fragment() {
+
+    private var exoPlayer: SimpleExoPlayer? = null
+    private var mediaUri: String? = null
+    private val viewModel: PlaybackViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,11 +34,74 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.getString("id")?.let { println("$$$ SecondFragment > id=$it") }
-
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_MediaListFragment)
+        arguments?.getString("media")?.let {
+            println("$$$ SecondFragment > id=$it")
+            mediaUri = it
         }
+        setupObserver()
+    }
+
+    private fun setupObserver() {
+        viewModel.bitrateLiveData.observe(viewLifecycleOwner) {
+            currentBitrateTxt.text = it
+        }
+
+        viewModel.frameRateLiveData.observe(viewLifecycleOwner) {
+            currentFramerateTxt.text = it
+        }
+        viewModel.currentTimeLiveData.observe(viewLifecycleOwner) {
+            currentTimeTxt.text = it
+        }
+        viewModel.playListUriLiveData.observe(viewLifecycleOwner) {
+            currentPlaylistUriTxt.text = it
+        }
+    }
+
+    private fun initializePlayer() {
+        if (this.exoPlayer == null && videoPlayer != null) {
+
+            exoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
+            mediaUri?.let {
+                MediaItem.fromUri(it)
+            }?.let {
+                exoPlayer?.setMediaItem(it)
+            }
+            videoPlayer.player = exoPlayer
+            exoPlayer?.let { viewModel.setPlayer(it) }
+            exoPlayer?.addListener(viewModel)
+            exoPlayer?.addAnalyticsListener(viewModel)
+            exoPlayer?.playWhenReady = true
+            exoPlayer?.prepare()
+            viewModel.poll()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initializePlayer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initializePlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releasePlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        releasePlayer()
+    }
+
+    private fun releasePlayer() {
+        exoPlayer?.let {
+            it.removeListener(viewModel)
+            it.removeAnalyticsListener(viewModel)
+            it.release()
+        }
+        exoPlayer = null
     }
 }

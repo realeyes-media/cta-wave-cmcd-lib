@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +39,8 @@ class MediaListFragment : Fragment(), MediaListAdapter.MediaListListener {
         setupObserver()
     }
 
-    override fun onMediaClick(id: String) {
-        findNavController().navigate(R.id.action_MediaListFragment_to_SecondFragment, bundleOf("id" to id))
+    override fun onMediaClick(uri: String) {
+        findNavController().navigate(R.id.action_MediaListFragment_to_SecondFragment, bundleOf("media" to uri))
     }
 
     private fun setupUI() {
