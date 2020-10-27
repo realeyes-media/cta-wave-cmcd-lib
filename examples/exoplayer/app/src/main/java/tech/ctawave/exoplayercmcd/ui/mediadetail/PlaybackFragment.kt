@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_second.*
+import kotlinx.android.synthetic.main.fragment_playback.*
 import kotlinx.android.synthetic.main.player_state_layout.*
 import tech.ctawave.exoplayercmcd.R
 
@@ -18,7 +18,7 @@ import tech.ctawave.exoplayercmcd.R
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 @AndroidEntryPoint
-class SecondFragment : Fragment() {
+class PlaybackFragment : Fragment() {
 
     private var exoPlayer: SimpleExoPlayer? = null
     private var mediaUri: String? = null
@@ -29,13 +29,13 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        return inflater.inflate(R.layout.fragment_playback, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getString("media")?.let {
-            println("$$$ SecondFragment > id=$it")
+            println("$$$ PlaybackFragment > id=$it")
             mediaUri = it
         }
         setupObserver()

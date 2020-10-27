@@ -40,7 +40,7 @@ class MediaListFragment : Fragment(), MediaListAdapter.MediaListListener {
     }
 
     override fun onMediaClick(uri: String) {
-        findNavController().navigate(R.id.action_MediaListFragment_to_SecondFragment, bundleOf("media" to uri))
+        findNavController().navigate(R.id.action_MediaListFragment_to_PlaybackFragment, bundleOf("media" to uri))
     }
 
     private fun setupUI() {

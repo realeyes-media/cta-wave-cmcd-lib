@@ -8,21 +8,21 @@
     <fragment
             android:id="@+id/MediaListFragment"
             android:name="tech.ctawave.exoplayercmcd.ui.medialist.MediaListFragment"
-            android:label="@string/first_fragment_label"
+            android:label="@string/mediaList_fragment_label"
             tools:layout="@layout/media_list_fragment">
 
         <action
-                android:id="@+id/action_MediaListFragment_to_SecondFragment"
-                app:destination="@id/SecondFragment"/>
+                android:id="@+id/action_MediaListFragment_to_PlaybackFragment"
+                app:destination="@id/PlaybackFragment"/>
     </fragment>
     <fragment
-            android:id="@+id/SecondFragment"
-            android:name="tech.ctawave.exoplayercmcd.ui.mediadetail.SecondFragment"
-            android:label="@string/second_fragment_label"
-            tools:layout="@layout/fragment_second">
+            android:id="@+id/PlaybackFragment"
+            android:name="tech.ctawave.exoplayercmcd.ui.mediadetail.PlaybackFragment"
+            android:label="@string/playback_fragment_label"
+            tools:layout="@layout/fragment_playback">
 
         <action
-                android:id="@+id/action_SecondFragment_to_MediaListFragment"
+                android:id="@+id/action_PlaybackFragment_to_MediaListFragment"
                 app:destination="@id/MediaListFragment"/>
     </fragment>
 </navigation>
