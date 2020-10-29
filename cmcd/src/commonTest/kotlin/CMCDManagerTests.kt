@@ -13,9 +13,8 @@ class CMCDManagerTests {
         val mockFactory = CMCDManagerFactoryFake()
         val manager = mockFactory.createCMCDManager(VersionLibrary.VERSION_1)
         manager.setBitrate(Version1Keys.br.name, 512)
-        val actual = manager.version.map["br"]?.value
+        val actual = manager.queryParamMap["br"]
         val expected = 512
-        val expectedQuery=manager.getQueryParams().toString()
         assertEquals(expected, actual)
     }
 }
