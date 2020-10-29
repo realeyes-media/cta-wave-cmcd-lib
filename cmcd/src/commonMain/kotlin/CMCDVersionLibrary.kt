@@ -95,6 +95,7 @@ enum class VersionLibrary {
 }
 
 class CMCDManagerTest(val version: Version) {
+    val queryParamMap: MutableMap<String, Any> = mutableMapOf()
     fun setBitrate(key: String, value: Int) {
         setProperty(key, value)
     }
@@ -103,14 +104,10 @@ class CMCDManagerTest(val version: Version) {
         setProperty(key, value)
     }
 
-    fun getQueryParams()=version.map
+    fun getQueryParams() = queryParamMap
 
     private fun <T> setProperty(key: String, value: T) {
-        val cmcdProperty = version.map[key]
-        val updatedCMCDProperty = cmcdProperty?.header?.let { CMCDProperty(it, cmcdProperty.description, value) }
-        if (updatedCMCDProperty != null) {
-            version.map.put(key, updatedCMCDProperty)
-        }
+        queryParamMap.put(key, value!!)
     }
 }
 
