@@ -1,5 +1,6 @@
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CMCDManagerTests {
     @Test
@@ -16,5 +17,10 @@ class CMCDManagerTests {
         val actual = manager.queryParamMap["br"]
         val expected = 512
         assertEquals(expected, actual)
+        manager.setBitrate(Version1Keys.bl.name, 10)
+        manager.setStreamingFormat(Version1Keys.sf.name, CMCDStreamingFormat.d)
+        val queryParams = "br=10,bl=10,sf=h"
+        val actualValidation = manager.validate(queryParams)
+        assertTrue(actualValidation)
     }
 }
