@@ -11,7 +11,7 @@ class CMCDManagerTests {
 
     @Test
     fun createVersionLibrary() {
-        val mockFactory = CMCDManagerFactoryFake()
+        val mockFactory = CMCDManagerCommonFactory()
         val manager = mockFactory.createCMCDManager(VersionLibrary.VERSION_1)
         manager.setBitrate(Version1Keys.br.name, 512)
         val actual = manager.queryParamMap["br"]
