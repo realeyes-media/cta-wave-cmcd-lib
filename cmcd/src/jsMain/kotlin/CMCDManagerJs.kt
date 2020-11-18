@@ -1,7 +1,12 @@
 actual object CMCDManagerFactory {
-    actual fun createCMCDManager(): CMCDManager = CMCDManagerJs
+    actual fun  createCMCDManager(contentId: String, sessionId: String, streamingFormat: CMCDStreamingFormat, version: CMCDVersion): CMCDManager =
+        CMCDManagerCommonFactory.createCMCDManager(contentId, sessionId, streamingFormat, version)
 }
 
-object CMCDManagerJs: CMCDManager {
-    override val hello = "hello!"
+external fun encodeURIComponent(str: String): String
+
+actual object CMCDUrlEncoder {
+    actual fun encode(str: String): String {
+        return encodeURIComponent(str)
+    }
 }
