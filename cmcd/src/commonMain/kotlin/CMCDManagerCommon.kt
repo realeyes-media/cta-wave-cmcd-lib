@@ -48,6 +48,9 @@ class CMCDManagerCommon(
 
         val queryParams = if (keyValuesStr.isNotEmpty()) "${delimiter}CMCD=$keyValuesStr" else ""
 
+        // reset any one time use properties
+        reset()
+
         return "$url$queryParams"
     }
 
@@ -88,7 +91,7 @@ class CMCDManagerCommon(
         bufferLength.value?.let { result[bufferLength.key.keyName] = convertToString(it) }
         encodedBitrate.value?.let { result[encodedBitrate.key.keyName] = convertToString(it) }
         if (bufferStarvation.value) { result[bufferStarvation.key.keyName] = null }
-        result[contentId.key.keyName] = convertToString(contentId.value)
+        if (CMCDKey.matchingValueForKey(contentId.key.keyName, contentId.value)) { result[contentId.key.keyName] = convertToString(contentId.value) }
         objectDuration.value?.let { result[objectDuration.key.keyName] = convertToString(it) }
         result[objectType.key.keyName] = objectType.value.token
         deadline.value?.let { result[deadline.key.keyName] = convertToString(it) }
@@ -97,7 +100,9 @@ class CMCDManagerCommon(
         nextRangeRequest.value?.let { nrr ->
             if (CMCDKey.matchingValueForKey(nextRangeRequest.key.keyName, nrr)) { result[nextRangeRequest.key.keyName] = convertToString(nrr) }
         }
-        playbackRate.value?.let { result[playbackRate.key.keyName] = convertToString(it) }
+        playbackRate.value?.let { pr ->
+            if (pr != 1.0) { result[playbackRate.key.keyName] = convertToString(pr) }
+        }
         requestedMaximumThroughput.value?.let { result[requestedMaximumThroughput.key.keyName] = convertToString(it) }
         result[sessionId.key.keyName] = convertToString(sessionId.value)
         if (startup.value) { result[startup.key.keyName] = null }
@@ -115,4 +120,9 @@ class CMCDManagerCommon(
             else -> "$v"
         }
     }
+
+    private fun reset() {
+        bufferStarvation.value = false
+    }
+
 }

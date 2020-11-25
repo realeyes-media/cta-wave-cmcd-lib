@@ -26,22 +26,93 @@ package models
  *  12. Transport Layer Security SHOULD be used to protect all transmission of CMCD data.
  */
 sealed class CMCDPayload {
+    /**
+     * @param value buffer in milliseconds
+     */
     data class BufferLength(var value: Int?, val key: CMCDKey = CMCDKey.BUFFER_LENGTH)
+
+    /**
+     * @param value bitrate in kbps
+     */
     data class EncodedBitrate(var value: Int?, val key: CMCDKey = CMCDKey.ENCODED_BITRATE)
+
+    /**
+     * @param value buffer has starved since last request
+     */
     data class BufferStarvation(var value: Boolean = false, val key: CMCDKey = CMCDKey.BUFFER_STARVATION)
+
+    /**
+     * @param value unique string identifying the current content. maximum length of 64 characters.
+     */
     data class ContentId(val value: String, val key: CMCDKey = CMCDKey.CONTENT_ID)
+
+    /**
+     * @param value playback duration in milliseconds of object being requested
+     */
     data class ObjectDuration(var value: Int?, val key: CMCDKey = CMCDKey.OBJECT_DURATION)
+
+    /**
+     * @param value current media object being requested
+     */
     data class ObjectType(var value: CMCDObjectType, val key: CMCDKey = CMCDKey.OBJECT_TYPE)
+
+    /**
+     * @param value milliseconds from the request time until the first sample needs to be available in order to prevent a buffer under-run or other playback problems
+     */
     data class Deadline(var value: Int?, val key: CMCDKey = CMCDKey.DEADLINE)
+
+    /**
+     * @param value throughput between client and server in kbps
+     */
     data class MeasuredThroughput(var value: Int?, val key: CMCDKey = CMCDKey.MEASURED_THROUGHPUT)
+
+    /**
+     * @param value relative path of the next object to be requested
+     */
     data class NextObjectRequest(var value: String?, val key: CMCDKey = CMCDKey.NEXT_OBJECT_REQUEST)
+
+    /**
+     * @param value next request byte range. string of the form "<range-start>-", "<range-start>-<range-end>", or "-<suffix-length>"
+     */
     data class NextRangeRequest(var value: String?, val key: CMCDKey = CMCDKey.NEXT_RANGE_REQUEST)
+
+    /**
+     * @param value current playback rate
+     */
     data class PlaybackRate(var value: Double?, val key: CMCDKey = CMCDKey.PLAYBACK_RATE)
+
+    /**
+     * @param value requested maximum throughput that the client considers sufficient for delivery of the asset
+     */
     data class RequestedMaximumThroughput(var value: Int?, val key: CMCDKey = CMCDKey.REQUESTED_MAXIMUM_THROUGHPUT)
+
+    /**
+     * @param value a GUID representing current playback session
+     */
     data class SessionId(var value: String, val key: CMCDKey = CMCDKey.SESSION_ID)
-    data class Startup(var value: Boolean = false, val key: CMCDKey = CMCDKey.STARTUP)
+
+    /**
+     * @param value streaming format defining current request
+     */
     data class StreamingFormat(var value: CMCDStreamingFormat, val key: CMCDKey = CMCDKey.STREAMING_FORMAT)
+
+    /**
+     * @param value stream type, LIVE or VOD
+     */
     data class StreamType(var value: CMCDStreamType?, val key: CMCDKey = CMCDKey.STREAM_TYPE)
+
+    /**
+     * @param value indicates object is needed urgently due to startup, seeking, or recovery.
+     */
+    data class Startup(var value: Boolean = false, val key: CMCDKey = CMCDKey.STARTUP)
+
+    /**
+     * @param value highest bitrate rendition in the manifest or playlist that client is allowed to play in kbps
+     */
     data class TopBitrate(var value: Int?, val key: CMCDKey = CMCDKey.TOP_BITRATE)
+
+    /**
+     * @param value library version
+     */
     data class Version(var value: CMCDVersion = CMCDVersion.VERSION_1, val key: CMCDKey = CMCDKey.VERSION)
 }

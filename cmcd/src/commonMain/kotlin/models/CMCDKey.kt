@@ -160,7 +160,7 @@ enum class CMCDKey(val keyName: String, val header: CMCDHeader) {
                 "bl" -> isInt(value)
                 "br" -> isInt(value)
                 "bs" -> isBoolean(value)
-                "cid" -> value != null
+                "cid" -> value != null && value.count() < 65
                 "d" -> isInt(value)
                 "dl" -> isInt(value)
                 "mtp" -> isInt(value)

@@ -1,8 +1,6 @@
 import models.CMCDConfig
 import models.CMCDPayload
 import models.CMCDObjectType
-import models.CMCDStreamingFormat
-import models.CMCDVersion
 
 interface CMCDManager {
     var bufferLength: CMCDPayload.BufferLength
