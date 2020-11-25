@@ -1,8 +1,8 @@
+import models.CMCDConfig
 import java.net.URLEncoder
 
 actual object CMCDManagerFactory {
-    actual fun  createCMCDManager(contentId: String, sessionId: String, streamingFormat: CMCDStreamingFormat, version: CMCDVersion): CMCDManager =
-        CMCDManagerCommonFactory.createCMCDManager(contentId, sessionId, streamingFormat, version)
+    actual fun  createCMCDManager(config: CMCDConfig): CMCDManager = CMCDManagerCommonFactory.createCMCDManager(config)
 }
 
 actual object CMCDUrlEncoder {
