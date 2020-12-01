@@ -1,4 +1,4 @@
-package models
+package tech.ctawave.cmcd.models
 
 /**
  * The stream type used by the current session.

@@ -1,4 +1,4 @@
-package models
+package tech.ctawave.cmcd.models
 
 /**
  * The data payload for Header and Query Argument transmission consists of a series of key/value pairs constructed according to the following rules:

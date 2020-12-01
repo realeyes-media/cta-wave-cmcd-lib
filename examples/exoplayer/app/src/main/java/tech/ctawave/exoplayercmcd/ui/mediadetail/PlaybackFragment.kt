@@ -12,7 +12,9 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_playback.*
 import kotlinx.android.synthetic.main.player_state_layout.*
+import retrofit2.http.Streaming
 import tech.ctawave.exoplayercmcd.R
+import tech.ctawave.exoplayercmcd.data.entities.StreamingFormat
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -35,8 +37,21 @@ class PlaybackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getString("media")?.let {
-            println("$$$ PlaybackFragment > id=$it")
+            println("$$$ PlaybackFragment > uri=$it")
             mediaUri = it
+        }
+        arguments?.getString("id")?.let {
+            println("$$$ PlaybackFragment > id=$it")
+            viewModel.contentId = it
+        }
+        arguments?.getString("format")?.let {
+            println("$$$ PlaybackFragment > format=$it")
+            viewModel.streamingFormat = when (it) {
+                StreamingFormat.HLS.toString() -> StreamingFormat.HLS
+                StreamingFormat.MPEG_DASH.toString() -> StreamingFormat.MPEG_DASH
+                StreamingFormat.SMOOTH_STREAMING.toString() -> StreamingFormat.SMOOTH_STREAMING
+                else -> null
+            }
         }
         setupObserver()
     }
@@ -59,6 +74,9 @@ class PlaybackFragment : Fragment() {
 
     private fun initializePlayer() {
         if (this.exoPlayer == null && videoPlayer != null) {
+
+            // init CMCD
+            viewModel.initCMCD()
 
             exoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
             mediaUri?.let {

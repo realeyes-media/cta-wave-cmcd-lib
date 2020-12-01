@@ -1,4 +1,4 @@
-package models
+package tech.ctawave.cmcd.models
 
 /**
  * Four headers are defined to transmit the data.

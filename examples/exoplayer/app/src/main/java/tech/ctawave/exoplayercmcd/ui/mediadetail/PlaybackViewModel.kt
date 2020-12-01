@@ -14,7 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+//import tech.ctawave.exoplayercmcd.CMCDAppManager
 import tech.ctawave.exoplayercmcd.R
+import tech.ctawave.exoplayercmcd.data.entities.StreamingFormat
 import tech.ctawave.exoplayercmcd.util.TimeUtils
 import java.lang.Exception
 import java.text.MessageFormat
@@ -25,7 +27,12 @@ class PlaybackViewModel @ViewModelInject constructor(application: Application, p
 
     private val applicationContext = application.applicationContext
     private var exoPlayer: SimpleExoPlayer? = null
-    var coroutineScope: CoroutineScope = viewModelScope
+    private var coroutineScope: CoroutineScope = viewModelScope
+
+    // CMCD
+    var contentId: String? = null
+    var streamingFormat: StreamingFormat? = null
+
     var bitrateLiveData: MutableLiveData<String> = MutableLiveData(formatMessage(R.string.current_bitrate, 0))
     var frameRateLiveData: MutableLiveData<String> = MutableLiveData(formatMessage(R.string.current_framerate, 0))
     var currentTimeLiveData: MutableLiveData<String> = MutableLiveData(formatMessage(R.string.current_position, 0))
@@ -33,6 +40,12 @@ class PlaybackViewModel @ViewModelInject constructor(application: Application, p
 
     fun setPlayer(exoPlayer: SimpleExoPlayer) {
         this.exoPlayer = exoPlayer
+    }
+
+    fun initCMCD() {
+        if (contentId != null && streamingFormat != null) {
+//            cmcdAppManager.initForContentId(contentId!!, streamingFormat!!)
+        }
     }
 
     fun poll() {

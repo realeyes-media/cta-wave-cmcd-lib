@@ -1,4 +1,4 @@
-package models
+package tech.ctawave.cmcd.models
 
 /**
  * Payload keys associated with Version 1 of Common Media Client Data specification.
@@ -187,7 +187,7 @@ enum class CMCDKey(val keyName: String, val header: CMCDHeader) {
 
         private fun isDecimal(value: String?): Boolean {
             return value?.let {
-                it.toFloatOrNull() != null
+                it.toDoubleOrNull() != null
             } ?: false
         }
 
