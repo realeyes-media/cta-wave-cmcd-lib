@@ -1,4 +1,4 @@
-package models
+package tech.ctawave.cmcd.models
 
 /**
  * The streaming format which defines the current request.

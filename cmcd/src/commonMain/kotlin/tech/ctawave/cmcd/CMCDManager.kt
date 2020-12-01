@@ -1,6 +1,8 @@
-import models.CMCDConfig
-import models.CMCDPayload
-import models.CMCDObjectType
+package tech.ctawave.cmcd
+
+import tech.ctawave.cmcd.models.CMCDConfig
+import tech.ctawave.cmcd.models.CMCDPayload
+import tech.ctawave.cmcd.models.CMCDObjectType
 
 interface CMCDManager {
     var bufferLength: CMCDPayload.BufferLength
@@ -30,8 +32,4 @@ interface CMCDManager {
 
 expect object CMCDManagerFactory {
     fun createCMCDManager(config: CMCDConfig): CMCDManager
-}
-
-expect object CMCDUrlEncoder {
-    fun encode(str: String): String
 }

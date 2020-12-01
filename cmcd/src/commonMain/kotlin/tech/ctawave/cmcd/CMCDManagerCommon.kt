@@ -1,8 +1,10 @@
-import models.CMCDConfig
-import models.CMCDObjectType
-import models.CMCDPayload
-import models.CMCDVersion
-import models.CMCDKey
+package tech.ctawave.cmcd
+
+import tech.ctawave.cmcd.models.CMCDConfig
+import tech.ctawave.cmcd.models.CMCDObjectType
+import tech.ctawave.cmcd.models.CMCDPayload
+import tech.ctawave.cmcd.models.CMCDVersion
+import tech.ctawave.cmcd.models.CMCDKey
 
 object CMCDManagerCommonFactory {
     fun createCMCDManager(config: CMCDConfig): CMCDManager {
@@ -101,7 +103,7 @@ class CMCDManagerCommon(
             if (CMCDKey.matchingValueForKey(nextRangeRequest.key.keyName, nrr)) { result[nextRangeRequest.key.keyName] = convertToString(nrr) }
         }
         playbackRate.value?.let { pr ->
-            if (pr != 1.0) { result[playbackRate.key.keyName] = convertToString(pr) }
+            if (pr != 1.0) { result[playbackRate.key.keyName] = CMCDUtil.doubleToString(pr, 1) }
         }
         requestedMaximumThroughput.value?.let { result[requestedMaximumThroughput.key.keyName] = convertToString(it) }
         result[sessionId.key.keyName] = convertToString(sessionId.value)
@@ -116,7 +118,7 @@ class CMCDManagerCommon(
 
     private fun convertToString(v: Any?): String {
         return when (v) {
-            is String -> CMCDUrlEncoder.encode("\"$v\"")
+            is String -> CMCDUtil.encode("\"$v\"")
             else -> "$v"
         }
     }
