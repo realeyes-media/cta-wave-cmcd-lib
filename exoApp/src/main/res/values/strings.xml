@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CMCD-Exoplayer</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="mediaList_fragment_label">MediaList Fragment</string>
+    <string name="playback_fragment_label">Playback Fragment</string>
+
+    <string name="current_bitrate">Current Bitrate Is: {0}kbps</string>
+    <string name="current_framerate">Current Framerate Is: {0}fps</string>
+    <string name="current_playlist_uri">Current Playlist Uri Is: {0}</string>
+    <string name="current_playhead">Current Playhead Is: {0}ms</string>
+</resources>

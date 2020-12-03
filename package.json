@@ -3,11 +3,11 @@
     "version": "0.1.0",
     "description": "CMCD Scripts",
     "scripts": {
-        "build:cmcd": "cd cmcd && ./gradlew clean && ./gradlew build",
-        "publish:mavenLocal": "cd cmcd && ./gradlew publishToMavenLocal",
+        "build:cmcd": "./gradlew clean && ./gradlew build",
+        "publish:mavenLocal": "./gradlew publishToMavenLocal",
         "changelog": "conventional-changelog -i CHANGELOG.md -s -p angular -r 0",
         "cz": "cz --hook",
-        "link:js": "cd cmcd/build/js/packages/cmcd && npm link",
+        "link:js": "cd build/js/packages/cmcd && npm link",
         "link:hlsjs": "cd examples/hlsjs && npm link cmcd",
         "link": "npm run build:cmcd && npm run publish:mavenLocal && npm run link:js && npm run link:hlsjs"
     },
