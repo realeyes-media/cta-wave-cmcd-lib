@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/MediaListFragment">
+
+    <fragment
+            android:id="@+id/MediaListFragment"
+            android:name="tech.ctawave.exoApp.ui.medialist.MediaListFragment"
+            android:label="@string/mediaList_fragment_label"
+            tools:layout="@layout/media_list_fragment">
+
+        <action
+                android:id="@+id/action_MediaListFragment_to_PlaybackFragment"
+                app:destination="@id/PlaybackFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/PlaybackFragment"
+            android:name="tech.ctawave.exoApp.ui.mediadetail.PlaybackFragment"
+            android:label="@string/playback_fragment_label"
+            tools:layout="@layout/playback_fragment">
+
+        <action
+                android:id="@+id/action_PlaybackFragment_to_MediaListFragment"
+                app:destination="@id/MediaListFragment"/>
+    </fragment>
+</navigation>

@@ -1,3 +1,11 @@
 .DS_STORE
 .vscode/
 node_modules/
+.idea/
+.gradle/
+build/
+*.iml
+local.properties
+.externalNativeBuild
+.cxx
+*.hprof
