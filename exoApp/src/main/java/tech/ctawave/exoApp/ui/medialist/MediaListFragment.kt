@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import tech.ctawave.exoApp.R
 import tech.ctawave.exoApp.data.entities.Media
+import tech.ctawave.exoApp.data.entities.StreamingFormat
 import tech.ctawave.exoApp.databinding.MediaListFragmentBinding
 import tech.ctawave.exoApp.util.Resource
 
@@ -46,8 +47,8 @@ class MediaListFragment : Fragment(), MediaListAdapter.MediaListListener {
         setupObserver()
     }
 
-    override fun onMediaClick(uri: String) {
-        findNavController().navigate(R.id.action_MediaListFragment_to_PlaybackFragment, bundleOf("media" to uri))
+    override fun onMediaClick(uri: String, id: String, format: String) {
+        findNavController().navigate(R.id.action_MediaListFragment_to_PlaybackFragment, bundleOf("media" to uri, "id" to id, "format" to format))
     }
 
     private fun setupUI() {

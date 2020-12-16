@@ -1,0 +1,68 @@
+{
+    "name": "cmcd-hlsjs",
+    "version": "0.1.0",
+    "description": "Example Implementation of CMCD Library for Hls.js",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack --config ./build/webpack.prod.js",
+        "start": "webpack-dev-server --config ./build/webpack.dev.js",
+        "lint": "eslint '*/**/*.{js,ts}' --quiet --fix",
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/realeyes-media/cmcd.git"
+    },
+    "keywords": [
+        "cmcd",
+        "cta",
+        "wave"
+    ],
+    "author": "RealEyes Media, LLC <info@realeyes.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/realeyes-media/cmcd/issues"
+    },
+    "private": true,
+    "homepage": "https://github.com/realeyes-media/cmcd#readme",
+    "devDependencies": {
+        "@babel/core": "7.11.6",
+        "@babel/plugin-proposal-class-properties": "7.10.4",
+        "@babel/plugin-transform-runtime": "7.11.5",
+        "@babel/preset-env": "7.11.5",
+        "@babel/preset-typescript": "7.10.4",
+        "@types/jest": "26.0.14",
+        "@typescript-eslint/eslint-plugin": "4.2.0",
+        "@typescript-eslint/parser": "4.2.0",
+        "babel-jest": "26.3.0",
+        "babel-loader": "8.1.0",
+        "clean-webpack-plugin": "3.0.0",
+        "eslint": "7.9.0",
+        "eslint-config-prettier": "6.11.0",
+        "eslint-plugin-prettier": "3.1.4",
+        "html-webpack-plugin": "4.5.0",
+        "husky": "4.3.0",
+        "jest": "26.4.2",
+        "lint-staged": "10.4.0",
+        "prettier": "2.1.2",
+        "typescript": "4.0.3",
+        "webpack": "4.44.2",
+        "webpack-cli": "3.3.12",
+        "webpack-dev-server": "3.11.0",
+        "webpack-merge": "5.1.4"
+    },
+    "dependencies": {
+        "cmcdlib-cmcd": "0.0.7"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "npm test"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "npm run lint"
+        ]
+    }
+}

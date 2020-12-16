@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "tech.ctawave"
-version = "1.0"
+version = "0.0.1"
 
 repositories {
     gradlePluginPortal()
@@ -23,7 +23,7 @@ android {
         minSdkVersion(24)
         targetSdkVersion(29)
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -67,7 +67,6 @@ dependencies {
     // exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.12.0")
     implementation("com.google.android.exoplayer:exoplayer-hls:2.12.0")
-    implementation("com.google.android.exoplayer:exoplayer-dash:2.12.0")
     implementation("com.google.android.exoplayer:exoplayer-ui:2.12.0")
     // json serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
@@ -84,6 +83,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.2.5")
     implementation("androidx.room:room-ktx:2.2.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    // redux - state management
+    implementation("org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.5")
 }
 
 kapt {

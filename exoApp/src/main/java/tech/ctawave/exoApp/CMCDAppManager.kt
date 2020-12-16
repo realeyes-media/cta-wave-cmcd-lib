@@ -23,50 +23,61 @@ class CMCDAppManager @Inject constructor() {
             StreamingFormat.SMOOTH_STREAMING -> CMCDStreamingFormat.SMOOTH_STREAMING
         }
         val config = CMCDConfig(contentId, sf, debug = debug)
+        println("$$$ cmcd > init")
         cmcdManager = CMCDManagerFactory.createCMCDManager(config)
     }
 
-    fun createCMCDCompliantUri(uri: String, objectType: CMCDObjectType, startup: Boolean): String {
+    fun createCMCDCompliantUri(uri: String, objectType: CMCDObjectType, startup: Boolean = false): String {
         return cmcdManager?.appendQueryParamsToUrl(uri, objectType, startup) ?: uri
     }
 
     fun updateBufferLength(bufferLength: Int) {
+        println("$$$ cmcd > updateBufferLength: $bufferLength")
         cmcdManager?.bufferLength = CMCDPayload.BufferLength(bufferLength)
     }
 
     fun updateEncodedBitrate(encodedBitrate: Int) {
+        println("$$$ cmcd > updateEncodedBitrate: $encodedBitrate")
         cmcdManager?.encodedBitrate = CMCDPayload.EncodedBitrate(encodedBitrate)
     }
 
     fun updateBufferStarvation(bufferStarvation: Boolean) {
+        println("$$$ cmcd > updateBufferStarvation: $bufferStarvation")
         cmcdManager?.bufferStarvation = CMCDPayload.BufferStarvation(bufferStarvation)
     }
 
     fun updateObjectDuration(objectDuration: Int) {
+        println("$$$ cmcd > objectDuration: $objectDuration")
         cmcdManager?.objectDuration = CMCDPayload.ObjectDuration(objectDuration)
     }
 
     fun updateDeadline(deadline: Int) {
+        println("$$$ cmcd > updateDeadline: $deadline")
         cmcdManager?.deadline = CMCDPayload.Deadline(deadline)
     }
 
     fun updateMeasuredThroughput(measuredThroughput: Int) {
+        println("$$$ cmcd > updateMeasuredThroughput: $measuredThroughput")
         cmcdManager?.measuredThroughput = CMCDPayload.MeasuredThroughput(measuredThroughput)
     }
 
     fun updateNextObjectRequest(nextObjectRequest: String) {
+        println("$$$ cmcd > updateNextObjectRequest: $nextObjectRequest")
         cmcdManager?.nextObjectRequest = CMCDPayload.NextObjectRequest(nextObjectRequest)
     }
 
     fun updateNextRangeRequest(nextRangeRequest: String) {
+        println("$$$ cmcd > updateNextRangeRequest: $nextRangeRequest")
         cmcdManager?.nextRangeRequest = CMCDPayload.NextRangeRequest(nextRangeRequest)
     }
 
     fun updatePlaybackRate(playbackRate: Double) {
+        println("$$$ cmcd > updatePlaybackRate: $playbackRate")
         cmcdManager?.playbackRate = CMCDPayload.PlaybackRate(playbackRate)
     }
 
     fun updateRequestedMaximumThroughput(requestedMaximumThroughput: Int) {
+        println("$$$ cmcd > updateRequestedMaximumThroughput: $requestedMaximumThroughput")
         cmcdManager?.requestedMaximumThroughput = CMCDPayload.RequestedMaximumThroughput(requestedMaximumThroughput)
     }
 
@@ -75,10 +86,12 @@ class CMCDAppManager @Inject constructor() {
             StreamType.LIVE -> CMCDStreamType.LIVE
             StreamType.VOD -> CMCDStreamType.VOD
         }
+        println("$$$ cmcd > updateStreamType: $cmcdStreamType")
         cmcdManager?.streamType = CMCDPayload.StreamType(cmcdStreamType)
     }
 
     fun updateTopBitrate(topBitrate: Int) {
+        println("$$$ cmcd > updateTypBitrate: $topBitrate")
         cmcdManager?.topBitrate = CMCDPayload.TopBitrate(topBitrate)
     }
 }

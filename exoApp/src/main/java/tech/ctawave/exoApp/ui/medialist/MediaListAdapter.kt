@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tech.ctawave.exoApp.data.entities.Media
 import tech.ctawave.exoApp.R
+import tech.ctawave.exoApp.data.entities.StreamingFormat
 import tech.ctawave.exoApp.databinding.MediaLayoutBinding
 
 class MediaListAdapter(private val listener: MediaListListener): RecyclerView.Adapter<MediaListAdapter.DataViewHolder>() {
 
     interface MediaListListener {
-        fun onMediaClick(uri: String)
+        fun onMediaClick(uri: String, id: String, format: String)
     }
 
     class DataViewHolder(itemView: View, private val listener: MediaListListener): RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -23,7 +24,7 @@ class MediaListAdapter(private val listener: MediaListListener): RecyclerView.Ad
         }
 
         override fun onClick(v: View?) {
-            listener.onMediaClick(media.uri)
+            listener.onMediaClick(media.uri, media.id, media.format)
         }
 
         fun bind(media: Media) {

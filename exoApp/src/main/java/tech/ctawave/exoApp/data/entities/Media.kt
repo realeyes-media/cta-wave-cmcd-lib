@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 
 @Entity(tableName = "media")
 @Serializable
-data class Media(@PrimaryKey val id: String = "", val title: String, val uri: String)
+data class Media(@PrimaryKey val id: String = "", val title: String, val uri: String, val format: String)
