@@ -7,8 +7,8 @@
         "publish:mavenLocal": "./gradlew publishToMavenLocal",
         "changelog": "conventional-changelog -i CHANGELOG.md -s -p angular -r 0",
         "cz": "cz --hook",
-        "link:js": "cd build/js/packages/cmcd && npm link",
-        "link:hlsjs": "cd examples/hlsjs && npm link cmcd",
+        "link:js": "cd build/js/packages/cmcdlib-cmcd && npm link",
+        "link:hlsjs": "cd hlsjsApp && npm link cmcdlib-cmcd",
         "link": "npm run build:cmcd && npm run publish:mavenLocal && npm run link:js && npm run link:hlsjs"
     },
     "repository": {

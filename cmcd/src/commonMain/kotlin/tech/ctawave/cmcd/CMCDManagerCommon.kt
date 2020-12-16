@@ -12,7 +12,7 @@ object CMCDManagerCommonFactory {
     }
 }
 
-class CMCDManagerCommon(
+class CMCDManagerCommon constructor(
     override var contentId: CMCDPayload.ContentId,
     override var sessionId: CMCDPayload.SessionId,
     override var streamingFormat: CMCDPayload.StreamingFormat,
@@ -63,9 +63,9 @@ class CMCDManagerCommon(
         // lowercase for all string comparison
         val str = queryParams.replace("CMCD=", "").toLowerCase()
 
+        // TODO: single loop? complexity would still be O(N) so not sure if worth it ...
         val map = str.split("%2c").associate {
             val parts = it.split("%3d")
-
             if (parts.size > 1) {
                 val (left, right) = parts
                 left to right
@@ -125,6 +125,8 @@ class CMCDManagerCommon(
 
     private fun reset() {
         bufferStarvation.value = false
+        nextRangeRequest.value = null
+        nextObjectRequest.value = null
     }
 
 }

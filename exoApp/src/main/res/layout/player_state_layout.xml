@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playerStateContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,28 +12,9 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/currentBitrateTxt"
+            android:id="@+id/lastUri"
             style="@style/player_state_text"
-            android:text="@string/current_bitrate"
-            tools:text="@string/current_bitrate" />
-
-        <TextView
-            android:id="@+id/currentFramerateTxt"
-            style="@style/player_state_text"
-            android:text="@string/current_framerate"
-            tools:text="@string/current_framerate" />
-
-        <TextView
-            android:id="@+id/currentPlayheadTxt"
-            style="@style/player_state_text"
-            android:text="@string/current_playhead"
-            tools:text="@string/current_playhead" />
-
-        <TextView
-            android:id="@+id/currentPlaylistUriTxt"
-            style="@style/player_state_text"
-            android:text="@string/current_playlist_uri"
-            tools:text="@string/current_playlist_uri" />
+            android:text="" />
 
     </LinearLayout>
 

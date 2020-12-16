@@ -15,7 +15,7 @@ repositories {
 }
 
 kotlin {
-    js {
+    js(IR) {
         browser {
             testTask {
                 useKarma {
@@ -23,6 +23,7 @@ kotlin {
                 }
             }
         }
+        useCommonJs()
         binaries.executable()
     }
     android()

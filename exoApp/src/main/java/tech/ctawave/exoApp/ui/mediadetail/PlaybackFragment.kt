@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.upstream.DataSource
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import tech.ctawave.exoApp.data.entities.StreamingFormat
 import tech.ctawave.exoApp.databinding.PlaybackFragmentBinding
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.android.exoplayer2.upstream.ResolvingDataSource
+import kotlinx.coroutines.flow.collect
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -50,31 +53,10 @@ class PlaybackFragment : Fragment() {
         }
         arguments?.getString("format")?.let {
             println("$$$ PlaybackFragment > format=$it")
-            viewModel.streamingFormat = when (it) {
-                StreamingFormat.HLS.toString() -> StreamingFormat.HLS
-                StreamingFormat.MPEG_DASH.toString() -> StreamingFormat.MPEG_DASH
-                StreamingFormat.SMOOTH_STREAMING.toString() -> StreamingFormat.SMOOTH_STREAMING
-                else -> null
-            }
+            viewModel.streamingFormat = StreamingFormat.fromString(it)
         }
-        setupObserver()
-    }
 
-    private fun setupObserver() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.currentBitrate.collect {
-                binding.playerStateContainer.currentBitrateTxt.text = it
-            }
-            viewModel.currentFramerate.collect {
-                binding.playerStateContainer.currentFramerateTxt.text = it
-            }
-            viewModel.currentPlaylistUri.collect {
-                binding.playerStateContainer.currentPlaylistUriTxt.text = it
-            }
-            viewModel.currentPlayhead.collect {
-                binding.playerStateContainer.currentPlayheadTxt.text = it
-            }
-        }
+        addObservers()
     }
 
     private fun initializePlayer() {
@@ -82,7 +64,13 @@ class PlaybackFragment : Fragment() {
             // init CMCD
             viewModel.initCMCD()
 
-            exoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
+            val httpDataSourceFactory = DefaultHttpDataSourceFactory()
+            val dataSourceFactory: DataSource.Factory = ResolvingDataSource.Factory(
+                httpDataSourceFactory,  // Provide just-in-time URI resolution logic.
+                { dataSpec: DataSpec -> dataSpec.withUri(viewModel.createCMCDCompliantUri(dataSpec)) })
+            val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+            exoPlayer = SimpleExoPlayer.Builder(requireContext()).setMediaSourceFactory(mediaSourceFactory).build()
             mediaUri?.let {
                 MediaItem.fromUri(it)
             }?.let {
@@ -94,7 +82,15 @@ class PlaybackFragment : Fragment() {
             exoPlayer?.addAnalyticsListener(viewModel)
             exoPlayer?.playWhenReady = true
             exoPlayer?.prepare()
-            viewModel.poll()
+            viewModel.pollPlayhead()
+        }
+    }
+
+    private fun addObservers() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.lastUri.collect {
+                binding.playerStateContainer.lastUri.text = it
+            }
         }
     }
 
@@ -110,12 +106,14 @@ class PlaybackFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        println("$$$ fragment > cancel")
         releasePlayer()
         _binding = null
     }
 
     override fun onStop() {
         super.onStop()
+        println("$$$ fragment > cancel")
         releasePlayer()
     }
 
