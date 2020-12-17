@@ -11,11 +11,56 @@ CTA-5004
 
 The SDK exports a single CMCDManager class that is instantiated through a factory function.
 
-```kotlin
-CMCDManagerFactory.createCMCDManager(config: CMCDConfig): CMCDManager
+### Installation
+
+
+#### Android/Kotlin
+
+Include Maven Repo
+
+```kotlin/dsl
+
 ```
 
-The library works by updating CMCDManager properties as stream state progresses. Each property is wrapped by a CMCDPayload data class.
+Import into project
+
+```kotlin/dsl
+implementation("tech.ctawave.cmcdlib:cmcd:0.0.1")
+```
+
+#### TypeScript/JavaScript
+
+```shell
+npm i --save "cmcdlib-cmcd"
+```
+
+### Usage
+
+```kotlin
+import tech.ctawave.cmcd
+
+val manager = CMCDManagerFactory.createCMCDManager(config: CMCDConfig): CMCDManager
+manager.encodedBitrate = 123456
+```
+
+```TypeScript
+import cmcdlib from "cmcdlib-cmcd"
+
+const manager = new cmcdlib.tech.ctawave.cmcd.CMCDManagerFactory.createCMCDManager(config: CMCDConfig): CMCDManager
+manager.encodedBitrate = 123456
+```
+
+The library works by updating CMCDManager properties as stream state progresses.
+
+When it's time to make a network request to your CDN, use the manager to append the CMCD query paramters to your URI by calling `appendQueryParamsToUrl` function providing the current url, the object request type, and whether or not this object is needed from startup.
+
+```kotlin
+val uriWithCMCDQueryParams = manager.appendQueryParamsToUrl(uri: string, objectType: string , startup: boolean)
+```
+
+```TypeScript
+const uriWithCMCDQueryParmas = manager.appendQueryParamsToUrl(uri: string, objectType: string , startup: boolean)
+```
 
 ### TypeScript Support
 

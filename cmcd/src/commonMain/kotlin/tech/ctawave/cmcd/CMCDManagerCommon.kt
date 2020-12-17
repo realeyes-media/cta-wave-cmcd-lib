@@ -1,45 +1,81 @@
 package tech.ctawave.cmcd
 
-import tech.ctawave.cmcd.models.CMCDConfig
 import tech.ctawave.cmcd.models.CMCDObjectType
 import tech.ctawave.cmcd.models.CMCDPayload
 import tech.ctawave.cmcd.models.CMCDVersion
 import tech.ctawave.cmcd.models.CMCDKey
+import tech.ctawave.cmcd.models.CMCDStreamType
+import tech.ctawave.cmcd.models.CMCDStreamingFormat
+import kotlin.js.ExperimentalJsExport
 
 object CMCDManagerCommonFactory {
+    @ExperimentalJsExport
     fun createCMCDManager(config: CMCDConfig): CMCDManager {
-        return CMCDManagerCommon(CMCDPayload.ContentId(config.contentId), CMCDPayload.SessionId(config.sessionId), CMCDPayload.StreamingFormat(config.streamingFormat), CMCDPayload.Version(config.version), config.debug)
+        return CMCDManagerCommon(config.contentId, config.sessionId, config.streamingFormat, config.version)
     }
 }
 
+@ExperimentalJsExport
 class CMCDManagerCommon constructor(
-    override var contentId: CMCDPayload.ContentId,
-    override var sessionId: CMCDPayload.SessionId,
-    override var streamingFormat: CMCDPayload.StreamingFormat,
-    override var version: CMCDPayload.Version,
-    override val debug: Boolean
+    override var contentId: String,
+    override var sessionId: String,
+    override var streamingFormat: String,
+    override var version: Int,
     ): CMCDManager {
 
-    override var bufferLength = CMCDPayload.BufferLength(null)
-    override var encodedBitrate = CMCDPayload.EncodedBitrate(null)
-    override var bufferStarvation = CMCDPayload.BufferStarvation(false)
-    override var objectDuration = CMCDPayload.ObjectDuration(null)
-    override var deadline = CMCDPayload.Deadline(null)
-    override var measuredThroughput = CMCDPayload.MeasuredThroughput(null)
-    override var nextObjectRequest = CMCDPayload.NextObjectRequest(null)
-    override var nextRangeRequest = CMCDPayload.NextRangeRequest(null)
-    override var objectType = CMCDPayload.ObjectType(CMCDObjectType.OTHER)
-    override var playbackRate = CMCDPayload.PlaybackRate(null)
-    override var requestedMaximumThroughput = CMCDPayload.RequestedMaximumThroughput(null)
-    override var startup = CMCDPayload.Startup(false)
-    override var streamType = CMCDPayload.StreamType(null)
-    override var topBitrate = CMCDPayload.TopBitrate(null)
+    override var bufferLength: Int? = null
+    override var encodedBitrate: Int? = null
+    override var bufferStarvation = false
+    override var objectDuration: Int? = null
+    override var deadline: Int? = null
+    override var measuredThroughput: Int? = null
+    override var nextObjectRequest: String? = null
+    override var nextRangeRequest: String? = null
+    override var objectType: String? = null
+    override var playbackRate: Double? = null
+    override var requestedMaximumThroughput: Int? = null
+    override var startup = false
+    override var streamType: String? = null
+    override var topBitrate: Int? = null
 
-    override fun appendQueryParamsToUrl(url: String, objectType: CMCDObjectType, startup: Boolean): String {
-        this.objectType.value = objectType
-        this.startup.value = startup
+    private val id = CMCDPayload.ContentId(contentId)
+    private val sid = CMCDPayload.SessionId(sessionId)
+    private val sf = CMCDStreamingFormat.from(streamingFormat)?.let { CMCDPayload.StreamingFormat(it) }
+    private val v = CMCDPayload.Version(CMCDVersion.from("$version") ?: CMCDVersion.VERSION_1)
+    private val bl: CMCDPayload.BufferLength
+        get() = CMCDPayload.BufferLength(bufferLength)
+    private val br: CMCDPayload.EncodedBitrate
+        get() = CMCDPayload.EncodedBitrate(encodedBitrate)
+    private val bs: CMCDPayload.BufferStarvation
+        get() = CMCDPayload.BufferStarvation(bufferStarvation)
+    private val d: CMCDPayload.ObjectDuration
+        get() = CMCDPayload.ObjectDuration(objectDuration)
+    private val dl: CMCDPayload.Deadline
+        get() = CMCDPayload.Deadline(deadline)
+    private val mt: CMCDPayload.MeasuredThroughput
+        get() = CMCDPayload.MeasuredThroughput(measuredThroughput)
+    private val nor: CMCDPayload.NextObjectRequest
+        get() = CMCDPayload.NextObjectRequest(nextObjectRequest)
+    private val nrr: CMCDPayload.NextRangeRequest
+        get() = CMCDPayload.NextRangeRequest(nextRangeRequest)
+    private val ot: CMCDPayload.ObjectType?
+        get() = CMCDObjectType.from(objectType)?.let { CMCDPayload.ObjectType(it) }
+    private val pr: CMCDPayload.PlaybackRate
+        get() = CMCDPayload.PlaybackRate(playbackRate)
+    private val rmt: CMCDPayload.RequestedMaximumThroughput
+        get() = CMCDPayload.RequestedMaximumThroughput(requestedMaximumThroughput)
+    private val s: CMCDPayload.Startup
+        get() = CMCDPayload.Startup(startup)
+    private val st: CMCDPayload.StreamType?
+        get() = CMCDStreamType.from(streamType)?.let { CMCDPayload.StreamType(it) }
+    private val tb: CMCDPayload.TopBitrate
+        get() = CMCDPayload.TopBitrate(topBitrate)
 
-        val delimiter = if (url.contains("?")) "&" else "?"
+    override fun appendQueryParamsToUri(uri: String, objectType: String, startup: Boolean): String {
+        this.objectType = objectType
+        this.startup = startup
+
+        val delimiter = if (uri.contains("?")) "&" else "?"
         val keyValues = buildKeyValues()
 
         val keyValuesStr = keyValues.map { entry ->
@@ -53,7 +89,7 @@ class CMCDManagerCommon constructor(
         // reset any one time use properties
         reset()
 
-        return "$url$queryParams"
+        return "$uri$queryParams"
     }
 
     override fun validate(queryParams: String): Boolean {
@@ -63,7 +99,6 @@ class CMCDManagerCommon constructor(
         // lowercase for all string comparison
         val str = queryParams.replace("CMCD=", "").toLowerCase()
 
-        // TODO: single loop? complexity would still be O(N) so not sure if worth it ...
         val map = str.split("%2c").associate {
             val parts = it.split("%3d")
             if (parts.size > 1) {
@@ -90,28 +125,30 @@ class CMCDManagerCommon constructor(
         val result = mutableMapOf<String, String?>()
 
         // TODO: limit based on objectType
-        bufferLength.value?.let { result[bufferLength.key.keyName] = convertToString(it) }
-        encodedBitrate.value?.let { result[encodedBitrate.key.keyName] = convertToString(it) }
-        if (bufferStarvation.value) { result[bufferStarvation.key.keyName] = null }
-        if (CMCDKey.matchingValueForKey(contentId.key.keyName, contentId.value)) { result[contentId.key.keyName] = convertToString(contentId.value) }
-        objectDuration.value?.let { result[objectDuration.key.keyName] = convertToString(it) }
-        result[objectType.key.keyName] = objectType.value.token
-        deadline.value?.let { result[deadline.key.keyName] = convertToString(it) }
-        measuredThroughput.value?.let { result[measuredThroughput.key.keyName] = convertToString(it) }
-        nextObjectRequest.value?.let { result[nextObjectRequest.key.keyName] = convertToString(it) }
-        nextRangeRequest.value?.let { nrr ->
-            if (CMCDKey.matchingValueForKey(nextRangeRequest.key.keyName, nrr)) { result[nextRangeRequest.key.keyName] = convertToString(nrr) }
+        bl.value?.let { result[bl.key.keyName] = convertToString(it) }
+        br.value?.let { result[br.key.keyName] = convertToString(it) }
+        if (bs.value) { result[bs.key.keyName] = null }
+        if (CMCDKey.matchingValueForKey(id.key.keyName, id.value)) { result[id.key.keyName] = convertToString(id.value) }
+        d.value?.let { result[d.key.keyName] = convertToString(it) }
+        ot?.let { result[it.key.keyName] = it.value.token }
+        dl.value?.let { result[dl.key.keyName] = convertToString(it) }
+        mt.value?.let { result[mt.key.keyName] = convertToString(it) }
+        nor.value?.let { result[nor.key.keyName] = convertToString(it) }
+        nrr.value?.let { r ->
+            if (CMCDKey.matchingValueForKey(nrr.key.keyName, r)) { result[nrr.key.keyName] = convertToString(r) }
         }
-        playbackRate.value?.let { pr ->
-            if (pr != 1.0) { result[playbackRate.key.keyName] = CMCDUtil.doubleToString(pr, 1) }
+        pr.value?.let { r ->
+            if (r != 1.0) { result[pr.key.keyName] = CMCDUtil.doubleToString(r, 1) }
         }
-        requestedMaximumThroughput.value?.let { result[requestedMaximumThroughput.key.keyName] = convertToString(it) }
-        result[sessionId.key.keyName] = convertToString(sessionId.value)
-        if (startup.value) { result[startup.key.keyName] = null }
-        result[streamingFormat.key.keyName] = streamingFormat.value.token
-        streamType.value?.let { result[streamType.key.keyName] = it.token }
-        topBitrate.value?.let { result[topBitrate.key.keyName] = convertToString(it) }
-        if (version.value != CMCDVersion.VERSION_1) { result[version.key.keyName] = convertToString(version.value.number) }
+        rmt.value?.let { result[rmt.key.keyName] = convertToString(it) }
+        result[sid.key.keyName] = convertToString(sid.value)
+        if (s.value) { result[s.key.keyName] = null }
+        sf?.let { result[it.key.keyName] = it.value.token }
+        st?.let { s ->
+            s.value?.let { result[s.key.keyName] = it.token }
+        }
+        tb.value?.let { result[tb.key.keyName] = convertToString(it) }
+        if (v.value != CMCDVersion.VERSION_1) { result[v.key.keyName] = convertToString(v.value.number) }
 
         return result
     }
@@ -124,9 +161,9 @@ class CMCDManagerCommon constructor(
     }
 
     private fun reset() {
-        bufferStarvation.value = false
-        nextRangeRequest.value = null
-        nextObjectRequest.value = null
+        bufferStarvation = false
+        nextRangeRequest = null
+        nextObjectRequest = null
     }
 
 }

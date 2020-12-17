@@ -15,15 +15,17 @@ repositories {
 }
 
 kotlin {
-    js(IR) {
+    js {
         browser {
             testTask {
                 useKarma {
                     useChromeHeadless()
                 }
             }
+            webpackTask {
+                output.libraryTarget = "commonjs2"
+            }
         }
-        useCommonJs()
         binaries.executable()
     }
     android()
