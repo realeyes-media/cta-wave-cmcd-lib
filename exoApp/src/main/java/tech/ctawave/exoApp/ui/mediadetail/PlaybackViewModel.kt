@@ -25,7 +25,9 @@ import tech.ctawave.exoApp.data.entities.StreamingFormat
 import tech.ctawave.exoApp.store.actions.PlayerActions
 import tech.ctawave.exoApp.store.store
 import tech.ctawave.exoApp.util.determineCMCDObjectType
+import kotlin.js.ExperimentalJsExport
 
+@ExperimentalJsExport
 class PlaybackViewModel @ViewModelInject constructor(application: Application, private val cmcdAppManager: CMCDAppManager) :
     AndroidViewModel(application),
     Player.EventListener, AnalyticsListener {
@@ -41,9 +43,9 @@ class PlaybackViewModel @ViewModelInject constructor(application: Application, p
     private val _lastUri = MutableStateFlow("")
     var lastUri: StateFlow<String> = _lastUri
 
-    private val _currentBuffer = MutableStateFlow(0)
+    private val _currentBuffer = MutableStateFlow(0L)
     private val _currentBitrate = MutableStateFlow(0)
-    private val _measuredThroughput = MutableStateFlow(0)
+    private val _measuredThroughput = MutableStateFlow(0L)
     private val _streamType = MutableStateFlow<StreamType?>(null)
     private val _playbackRate = MutableStateFlow(0.0)
 
@@ -98,7 +100,7 @@ class PlaybackViewModel @ViewModelInject constructor(application: Application, p
         bitrateEstimate: Long
     ) {
         super.onBandwidthEstimate(eventTime, totalLoadTimeMs, totalBytesLoaded, bitrateEstimate)
-        _measuredThroughput.value = bitrateEstimate.toInt()
+        _measuredThroughput.value = bitrateEstimate
     }
 
     override fun onTimelineChanged(timeline: Timeline, reason: Int) {
@@ -137,7 +139,7 @@ class PlaybackViewModel @ViewModelInject constructor(application: Application, p
     }
 
     private fun updateCurrentBuffer(exo: ExoPlayer) {
-        _currentBuffer.value = exo.totalBufferedDuration.toInt()
+        _currentBuffer.value = exo.totalBufferedDuration
     }
 
     private fun observeCMCDProperties() {
