@@ -1,7 +1,10 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java#publishing-using-gradle
 
-name: Gradle Package
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java#publishing-using-gradle
+
+name: Gradle and NPM Package
 
 on:
   realease:
@@ -26,8 +29,29 @@ jobs:
 
       # The USERNAME and TOKEN need to correspond to the credentials environment variabls used in
       # the publishing section of your build.gradle
-      - name: Publish to GitHub Packages
+      - name: Publish Maven to GitHub Packages
         run: gradle publish
         env:
           USERNAME: ${{ github.actor }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js #Publish NPM to GitHub Packages
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Publish NPM to GitHub Packages
+        run: npm run publish:npm
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm run publish:npm
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
