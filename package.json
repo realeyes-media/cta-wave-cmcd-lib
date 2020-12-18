@@ -1,10 +1,11 @@
 {
     "name": "cmcd",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "CMCD Scripts",
     "scripts": {
         "build:cmcd": "./gradlew clean && ./gradlew build",
         "publish:mavenLocal": "./gradlew publishToMavenLocal",
+        "publish:npm": "cd build/js/packages/cmcdlib-cmcd && npm ci && npm publish",
         "changelog": "conventional-changelog -i CHANGELOG.md -s -p angular -r 0",
         "cz": "cz --hook",
         "link:js": "cd build/js/packages/cmcdlib-cmcd && npm link",
@@ -20,7 +21,7 @@
         "cta",
         "wave"
     ],
-    "author": "RealEyes Media, LLC <info@realeyes.com>",
+    "author": "RealEyes Media, Inc. <info@realeyes.com>",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/realeyes-media/cmcd/issues"
