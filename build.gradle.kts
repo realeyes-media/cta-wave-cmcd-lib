@@ -14,7 +14,7 @@ buildscript {
 }
 
 group = "tech.ctawave"
-version = "0.0.8"
+version = "0.0.1"
 
 repositories {
     mavenCentral()

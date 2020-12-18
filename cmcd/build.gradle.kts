@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "tech.ctawave"
-version = "0.0.7"
+version = "0.0.1"
 
 repositories {
     gradlePluginPortal()
@@ -59,7 +59,7 @@ android {
         minSdkVersion(24)
         targetSdkVersion(29)
         versionCode = 0
-        versionName = "0.0.7"
+        versionName = "0.0.1"
     }
     sourceSets {
         val main by getting {
@@ -93,7 +93,7 @@ publishing {
                 developers {
                     developer {
                         id.set("realeyesmedia")
-                        name.set("RealEyes Media, LLC.")
+                        name.set("RealEyes Media, Inc.")
                         email.set("info@realeyes.com")
                     }
                 }
@@ -103,7 +103,12 @@ publishing {
 
     repositories {
         maven {
-            url = uri("gcs://realeyes-maven/maven-releases")
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/realeyes-media/cmcd")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
         }
     }
 }
