@@ -1,5 +1,6 @@
 # Common Media Client Data
 
+![Gradle Unit Tests](https://github.com/realeyes-media/cmcd/workflows/Gradle%20Unit%20Tests/badge.svg)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://commitizen.github.io/cz-cli/)
 
 [Proposal](https://github.com/cta-wave/common-media-client-data)
