@@ -7,7 +7,7 @@
 name: Gradle and NPM Package
 
 on:
-  realease:
+  release:
       types: [created]
 
 jobs:
