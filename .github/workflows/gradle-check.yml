@@ -20,5 +20,7 @@ jobs:
 
       - name: Unit Test
         run: gradle testDebugUnitTest
+      - name: Clean
+        run: ./gradlew clean
       - name: Build with Gradle
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --debug
