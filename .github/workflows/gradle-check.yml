@@ -21,4 +21,4 @@ jobs:
       - name: Unit Test
         run: gradle testDebugUnitTest
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build --stacktrace
