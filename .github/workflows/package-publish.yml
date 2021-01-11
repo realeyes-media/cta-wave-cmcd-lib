@@ -20,9 +20,8 @@ jobs:
          owner: 'github'
          repo: 'packages'
          package-name: 'tech.ctawave.cmcd 0.0.1'
-        env:
-          USERNAME: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         token: ${{ secrets.GITHUB_TOKEN }}
+         
   build:
 
       runs-on: ubuntu-latest
