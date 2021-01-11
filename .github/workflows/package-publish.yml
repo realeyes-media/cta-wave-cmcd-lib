@@ -11,17 +11,17 @@ on:
       types: [created]
 
 jobs:
-  delete-package:
-     runs-on: ubuntu-latest
-     steps:
-      - uses: actions/checkout@v2
-      - name: Delete packages
-        uses: actions/delete-package-versions@v1
-        with:
-         owner: 'realeyes-media'
-         repo: 'cmcd'
-         package-name: 'tech.ctawave.cmcd-js'
-         token: ${{ secrets.GITHUB_TOKEN }}
+#   delete-package:
+#      runs-on: ubuntu-latest
+#      steps:
+#       - uses: actions/checkout@v2
+#       - name: Delete packages
+#         uses: actions/delete-package-versions@v1
+#         with:
+#          owner: 'realeyes-media'
+#          repo: 'cmcd'
+#          package-name: 'tech.ctawave.cmcd-js'   # change the value of package name if you want to delete a specific name
+#          token: ${{ secrets.GITHUB_TOKEN }}
          
   build:
 
