@@ -14,8 +14,9 @@ jobs:
   delete-package:
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/delete-package-versions@v1
+      - uses: actions/checkout@v2
       - name: Delete packages
+        uses: actions/delete-package-versions@v1
         with:
          owner: 'realeyes-media'
          repo: 'cmcd'
