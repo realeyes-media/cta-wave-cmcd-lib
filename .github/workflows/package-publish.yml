@@ -20,8 +20,15 @@ jobs:
         with:
          owner: 'realeyes-media'
          repo: 'cmcd'
-         package-name: 'tech.ctawave.cmcd, tech.ctawave.cmcd.js'
+         package-name: 'tech.ctawave.cmcd'
          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete js packages
+        uses: actions/delete-package-versions@v1
+        with:
+         owner: 'realeyes-media'
+         repo: 'cmcd'
+         package-name: 'tech.ctawave.cmcd-js'
+         token: ${{ secrets.GITHUB_TOKEN }}  
          
   build:
 
