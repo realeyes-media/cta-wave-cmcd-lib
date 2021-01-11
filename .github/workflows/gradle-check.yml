@@ -22,3 +22,5 @@ jobs:
         run: ./gradlew clean
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
+      - name: Unit Test
+        run: ./gradlew testDebugUnitTest
