@@ -32,8 +32,8 @@ jobs:
       - name: Delete Package Versions Action
         uses: actions/delete-package-versions@v1
         with:
-         owner: 'github'
-         repo: 'packages'
+         owner: 'realeyes-media'
+         repo: 'cmcd'
          package-name: 'tech.ctawave.cmcd 0.0.1'
          token: ${{ secrets.GITHUB_TOKEN }}
       # The USERNAME and TOKEN need to correspond to the credentials environment variabls used in
