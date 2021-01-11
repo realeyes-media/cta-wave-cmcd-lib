@@ -20,7 +20,7 @@ jobs:
         with:
          owner: 'realeyes-media'
          repo: 'cmcd'
-         package-name: 'tech.ctawave.cmcd'
+         package-name: 'tech.ctawave.cmcd, tech.ctawave.cmcd.js'
          token: ${{ secrets.GITHUB_TOKEN }}
          
   build:
