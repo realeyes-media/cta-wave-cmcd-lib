@@ -30,7 +30,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
       - name: Delete Package Versions Action
-      - uses: actions/delete-package-versions@v1
+        uses: actions/delete-package-versions@v1
         with:
          owner: 'github'
          repo: 'packages'
