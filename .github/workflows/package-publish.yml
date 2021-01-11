@@ -23,14 +23,15 @@ jobs:
           java-version: 1.8
           server-id: github # value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
-
+      - name: Clean
+        run: ./gradlew clean
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       # The USERNAME and TOKEN need to correspond to the credentials environment variabls used in
       # the publishing section of your build.gradle
       - name: Publish Maven to GitHub Packages
-        run: gradle publish
+        run: ./gradlew publish
         env:
           USERNAME: ${{ github.actor }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
