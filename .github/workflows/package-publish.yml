@@ -11,16 +11,6 @@ on:
       types: [created]
 
 jobs:
-  delete package:
-      runs-on: ubuntu-latest
-      steps:
-        
-      - uses: actions/delete-package-versions@v1
-        with:
-         owner: 'github'
-         repo: 'packages'
-         package-name: 'tech.ctawave.cmcd 0.0.1'
-         token: ${{ secrets.GITHUB_TOKEN }}
          
   build:
 
@@ -39,7 +29,13 @@ jobs:
         run: ./gradlew clean
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
-
+      - name: Delete Package Versions Action
+      - uses: actions/delete-package-versions@v1
+        with:
+         owner: 'github'
+         repo: 'packages'
+         package-name: 'tech.ctawave.cmcd 0.0.1'
+         token: ${{ secrets.GITHUB_TOKEN }}
       # The USERNAME and TOKEN need to correspond to the credentials environment variabls used in
       # the publishing section of your build.gradle
       - name: Publish Maven to GitHub Packages
