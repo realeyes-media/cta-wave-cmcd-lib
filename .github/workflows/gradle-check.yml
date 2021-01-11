@@ -21,4 +21,4 @@ jobs:
       - name: Clean
         run: ./gradlew clean
       - name: Build with Gradle
-        run: ./gradlew build --debug
+        run: ./gradlew build --stacktrace
