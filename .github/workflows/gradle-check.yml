@@ -4,7 +4,8 @@ name: Gradle Unit Tests
 
 on:
   pull_request:
-      brances: [main]
+      branches:
+       - main
 
 jobs:
   build:
