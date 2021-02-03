@@ -74,7 +74,6 @@ android {
 }
 
 
-
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
