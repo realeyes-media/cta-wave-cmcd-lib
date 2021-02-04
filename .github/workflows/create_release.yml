@@ -19,7 +19,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
+      - name: Generate version strings
+        run: |
+          echo '::set-env name=VERSION_FILE::'$(cat VERSION)
       - name: Clean
         run: ./gradlew clean
       - name: Build with Gradle
