@@ -55,6 +55,18 @@ jobs:
       
       - name: Publish NPM to GitHub Packages
         run: npm run publish:npm
+      
+      - name: Create browser production js  
+        run: ./gradlew jsBrowserProductionWebpack
+        
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: app/cmcd/build/distributions/cmcd.js
+          asset_name: cmcd.js
 
   publish-gpr:
     needs: build
