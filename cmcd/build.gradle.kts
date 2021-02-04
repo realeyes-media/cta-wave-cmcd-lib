@@ -3,17 +3,14 @@ plugins {
     id("com.android.library")
     id("maven-publish")
 }
-
 group = "tech.ctawave"
-version = "0.0.1"
-
+version = "0.0.2"
 repositories {
     gradlePluginPortal()
     google()
     jcenter()
     mavenCentral()
 }
-
 kotlin {
     js {
         browser {
@@ -23,7 +20,8 @@ kotlin {
                 }
             }
             webpackTask {
-                output.libraryTarget = "commonjs2"
+                // output.libraryTarget = "commonjs2"
+                output.libraryTarget = "umd"
             }
         }
         binaries.executable()
@@ -52,7 +50,6 @@ kotlin {
         }
     }
 }
-
 android {
     compileSdkVersion(29)
     defaultConfig {
@@ -72,25 +69,20 @@ android {
         }
     }
 }
-
-
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             groupId = "tech.ctawave"
             artifactId = "cmcd"
-
             pom {
                 name.set("CMCD")
                 description.set("Common Media Client Data SDK")
                 url.set("https://github.com/realeyes-media/cmcd")
-
                 licenses {
                     license {
                         name.set("MIT")
                     }
                 }
-
                 developers {
                     developer {
                         id.set("realeyesmedia")
@@ -101,7 +93,6 @@ publishing {
             }
         }
     }
-
     repositories {
         maven {
             name = "GitHubPackages"
@@ -112,4 +103,7 @@ publishing {
             }
         }
     }
+}
+tasks.named<org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile>("compileKotlinJs").configure {
+    kotlinOptions.moduleKind = "commonjs"
 }
