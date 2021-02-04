@@ -4,7 +4,7 @@ name: Create a release CI
 
 on:
   push:
-    branches: [ CMCD-42 ]
+    branches: [ Test ]
 
   workflow_dispatch:
 
