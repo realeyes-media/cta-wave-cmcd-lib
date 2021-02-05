@@ -25,7 +25,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Generate production minfied js
-        run: ./gradlew jsBrowserProductionWebpack
+        run: ./gradlew jsBrowserDevelopmentWebpack
         
       - name: Create Release
         id: create_release
