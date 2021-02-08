@@ -42,7 +42,7 @@ jobs:
         with:
           credentials: ${{ secrets.gcp_credentials }}
           path: cmcd/build/distributions/cmcd.js
-          destination: static.realeyes.cloud/cmcd/AlphaRelease${{ github.run_number }}/
+          destination: static.realeyes.cloud/cmcd/AlphaRelease${{ github.run_number }}
      
       - name: Create Release
         id: create_release
