@@ -3,6 +3,7 @@ plugins {
     id("com.android.library")
     id("maven-publish")
 }
+
 group = "tech.ctawave"
 version = "0.0.2"
 repositories {
