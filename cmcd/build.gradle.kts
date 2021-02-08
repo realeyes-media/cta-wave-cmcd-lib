@@ -22,7 +22,11 @@ kotlin {
             webpackTask {
                 // output.libraryTarget = "commonjs2"
                 output.libraryTarget = "umd"
+                dceTask {
+                    keep("cmcdlib-cmcd.tech.ctawave.cmcd")
+                }
             }
+
         }
         binaries.executable()
     }

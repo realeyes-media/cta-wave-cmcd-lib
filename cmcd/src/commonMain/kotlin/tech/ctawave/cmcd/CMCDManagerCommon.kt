@@ -7,15 +7,19 @@ import tech.ctawave.cmcd.models.CMCDKey
 import tech.ctawave.cmcd.models.CMCDStreamType
 import tech.ctawave.cmcd.models.CMCDStreamingFormat
 import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
+@ExperimentalJsExport
+@JsExport
 object CMCDManagerCommonFactory {
-    @ExperimentalJsExport
+
     fun createCMCDManager(config: CMCDConfig): CMCDManager {
         return CMCDManagerCommon(config.contentId, config.sessionId, config.streamingFormat, config.version)
     }
 }
 
 @ExperimentalJsExport
+@JsExport
 class CMCDManagerCommon constructor(
     override var contentId: String,
     override var sessionId: String,
