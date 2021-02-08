@@ -24,7 +24,7 @@ kotlin {
                 output.libraryTarget = "umd"
             }
             dceTask {
-                keep("cmcdlib-cmd.tech.ctawave.cmcd")
+                keep("cmcdlib-cmcd.tech.ctawave.cmcd")
             }
         }
         binaries.executable()
