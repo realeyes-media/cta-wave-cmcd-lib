@@ -44,7 +44,7 @@ jobs:
         with:
           credentials: ${{ secrets.gcp_credentials }}
           path: cmcd/build/distributions/cmcd.js
-          destination: gs://static.realeyes.cloud/cmcd/Release${{ github.run_number }}/cmcd.js
+          destination: static.realeyes.cloud/cmcd/Release${{ github.run_number }}/cmcd.js
      
       - name: Upload Release Asset
         id: upload-release-asset 
