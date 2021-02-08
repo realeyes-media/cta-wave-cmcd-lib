@@ -24,8 +24,7 @@ kotlin {
                 output.libraryTarget = "umd"
             }
             dceTask {
-                dceOptions.devMode = true
-                keep("cmcd.org.example.getName", "myKotlinJSModule.org.example.User" )
+                keep("cmcdlib-cmd.tech.ctawave.cmcd")
             }
         }
         binaries.executable()
