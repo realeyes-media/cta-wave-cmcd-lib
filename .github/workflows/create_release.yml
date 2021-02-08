@@ -40,6 +40,7 @@ jobs:
         id: upload-file
         uses: google-github-actions/upload-cloud-storage@main
         with:
+          credentials: ${{ secrets.gcp_credentials }}
           path: cmcd/build/distributions/cmcd.js
           destination: static.realeyes.cloud/cmcd/Release${{ github.run_number }}/cmcd.js
      
