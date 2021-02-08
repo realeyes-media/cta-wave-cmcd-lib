@@ -156,7 +156,6 @@ interface CMCDManager {
  * Creates CMCDManager Class using supplied CMCDConfig
  */
 @ExperimentalJsExport
-@JsExport
 expect object CMCDManagerFactory {
     fun createCMCDManager(config: CMCDConfig): CMCDManager
 }
