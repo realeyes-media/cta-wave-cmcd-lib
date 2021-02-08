@@ -23,6 +23,10 @@ kotlin {
                 // output.libraryTarget = "commonjs2"
                 output.libraryTarget = "umd"
             }
+            dceTask {
+                dceOptions.devMode = true
+                keep("cmcd.org.example.getName", "myKotlinJSModule.org.example.User" )
+            }
         }
         binaries.executable()
     }
